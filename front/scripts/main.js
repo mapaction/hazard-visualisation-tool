@@ -18,10 +18,11 @@ function go_button_onclick() {
     console.log("data type: " + data_type);
 
     // Determine file path based on data type
-    const filePath = data_type.toLowerCase() === 'geojson' ? 'https://github.com/mapaction/hazard-visualisation-tool/raw/refs/heads/main/data/lebanon-draft-01.json' : 'https://github.com/mapaction/hazard-visualisation-tool/raw/refs/heads/main/data/lebanon-draft-01.csv';
+    const url = `http://127.0.0.1:5000/${country}/hazard/flood/${admin_level}/?format=${data_type}`;
+    //const filePath = data_type.toLowerCase() === 'geojson' ? 'https://github.com/mapaction/hazard-visualisation-tool/raw/refs/heads/main/data/lebanon-draft-01.json' : 'https://github.com/mapaction/hazard-visualisation-tool/raw/refs/heads/main/data/lebanon-draft-01.csv';
 
     // Load data from file
-    loadDataFromFile(filePath, data_type.toLowerCase());
+    loadDataFromFile(url, data_type.toLowerCase());
 }
 
 function loadDataFromFile(filePath, dataType) {
