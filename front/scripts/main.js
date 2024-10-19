@@ -17,51 +17,41 @@ function go_button_onclick() {
     console.log("admin level: " + admin_level);
     console.log("data type: " + data_type);
 
-    const csvData = `Name,Latitude,Longitude
-Big Ben,51.500729,-0.124625
-London Eye,51.503399,-0.119519
-Tower Bridge,51.505456,-0.075356
-Buckingham Palace,51.501364,-0.141890
-British Museum,51.519459,-0.126931`;
+    // Determine file path based on data type
+    const filePath = data_type.toLowerCase() === 'geojson' ? './assets/data/lebanon-draft-01.json' : './assets/data/lebanon-draft-01.csv';
 
-    const geojsonData = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {"name": "Big Ben"},
-                "geometry": {"type": "Point", "coordinates": [-0.124625, 51.500729]}
-            },
-            {
-                "type": "Feature",
-                "properties": {"name": "London Eye"},
-                "geometry": {"type": "Point", "coordinates": [-0.119519, 51.503399]}
-            },
-            {
-                "type": "Feature",
-                "properties": {"name": "Tower Bridge"},
-                "geometry": {"type": "Point", "coordinates": [-0.075356, 51.505456]}
-            },
-            {
-                "type": "Feature",
-                "properties": {"name": "Buckingham Palace"},
-                "geometry": {"type": "Point", "coordinates": [-0.141890, 51.501364]}
-            },
-            {
-                "type": "Feature",
-                "properties": {"name": "British Museum"},
-                "geometry": {"type": "Point", "coordinates": [-0.126931, 51.519459]}
-            }
-        ]
-    };
-
-    const isGeojson = data_type.toLowerCase() === 'geojson';
-    const tableData = isGeojson ? geojsonToTable(geojsonData) : parseCSVToTable(csvData);
-    
-    document.getElementById('tableContainer').innerHTML = ""; // Clear the previous content
-    document.getElementById('tableContainer').appendChild(tableData); // Append the new table
-    initMap(isGeojson ? geojsonData : csvData, isGeojson);
+    // Load data from file
+    loadDataFromFile(filePath, data_type.toLowerCase());
 }
+
+function loadDataFromFile(filePath, dataType) {
+    fetch(filePath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return dataType === 'geojson' ? response.json() : response.text();
+        })
+        .then(data => {
+            processData(data, dataType);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error.message);
+        });
+}
+
+function processData(data, dataType) {
+    const isGeojson = dataType === 'geojson';
+    const tableData = isGeojson ? geojsonToTable(data) : parseCSVToTable(data);
+    
+    // Display table
+    document.getElementById('tableContainer').innerHTML = "";
+    document.getElementById('tableContainer').appendChild(tableData);
+
+    // Update map
+    initMap(data, isGeojson);
+}
+
 
 function initMap(data, isGeojson) {
     if (!map) {
@@ -77,6 +67,7 @@ function initMap(data, isGeojson) {
         map.removeLayer(dataLayer);
     }
 
+    // Create new data layer
     if (isGeojson) {
         dataLayer = L.geoJSON(data, {
             pointToLayer: function(feature, latlng) {
@@ -99,8 +90,10 @@ function initMap(data, isGeojson) {
         }
     }
 
+    // Add the new data layer to the map
     dataLayer.addTo(map);
 
+    // Fit the map bounds to the new data layer
     map.fitBounds(dataLayer.getBounds());
 }
 
