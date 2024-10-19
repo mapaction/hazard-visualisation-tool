@@ -16,7 +16,6 @@ git clone git@github.com:mapaction/hazard-visualisation-tool.git
 ```bash
 cd hazard-visualisation-tool
 poetry install --no-root
-flask --app app run
 ```
 
 ## to run backend
