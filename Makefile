@@ -1,3 +1,3 @@
 .PHONY: run
 run:
-	flask --app main --debug run
+	poetry run flask --app hazard-visualisation-tool/app --debug run
