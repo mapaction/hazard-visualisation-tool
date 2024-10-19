@@ -1,24 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Webpage</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
-    <header>
-        <h1 class="text-xl">Welcome to the Map Action Datathon Hazard Visualisation Project </h1>
-    </header>
+    <div id="drawer container">
+        <div class="drawer lg:drawer-open">
+            <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+            <div class="drawer-content flex flex-col items-center justify-center">
+                <label htmlFor="my-drawer-2" class="btn btn-primary drawer-button lg:hidden mt-10">Show Options</label>
+            </div>
+            <div class="drawer-side">
+                <label htmlFor="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+                <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                    <h1>Map Action Datathon Hazard Visualisation Tool</h1>
+                    <div class="divider"></div>
+                    <li>
+                        <select id='country select' class="select select-bordered w-full max-w-xs">
+                            <summary class="btn m-1">Country</summary>
+                                <option><a>Lebanon</a></option>
+                                <option><a>Lebanon</a></option>
+                                <option><a>Lebanon</a></option>
+                            </ul>
+                        </select>
+                        <div class="divider"></div>
+                        <select id='country select' class="select select-bordered w-full max-w-xs">
+                            <summary class="btn m-1">Admin Level</summary>
+                                <option><a>Level 2</a></option>
+                                <option><a>Level 2</a></option>
+                                <option><a>level 2</a></option>
+                            </ul>
+                        </select>
+                        <div class="divider"></div>
+                        <select id='country select' class="select select-bordered w-full max-w-xs">
+                            <summary class="btn m-1">Data Type</summary>
+                                <option><a>GeoJSon</a></option>
+                                <option><a>CSV</a></option>
+                            </ul>
+                        </select>
+                        <div class="divider"></div>
+                        <button class="btn btn-success">Go!</button>
 
-    <main>
-        <p>This is the main content area. Add your content here.</p>
-    </main>
 
-    <footer>
-        <p>&copy; 2024 My Webpage. All rights reserved.</p>
-    </footer>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div id="dataviz container">
+
+    </div>
+
+
     <script src="scripts/main.js"></script>
 </body>
+
 </html>
