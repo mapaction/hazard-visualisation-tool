@@ -11,11 +11,17 @@ clone repository
 git clone git@github.com:mapaction/hazard-visualisation-tool.git
 ```
 
-install dependencies
+## install dependencies
 
 ```bash
 cd hazard-visualisation-tool
 poetry install --no-root
+flask --app app run
+```
+
+## to run backend
+```bash
+flask --app app run
 ```
 
 ### Data
