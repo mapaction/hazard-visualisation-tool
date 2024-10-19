@@ -9,8 +9,7 @@
 </head>
 
 <body>
-    </div>
-    <div id="drawer container">
+    <div id="drawer-container">
         <div class="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col items-center justify-center">
@@ -27,39 +26,38 @@
                                 <option><a>Lebanon</a></option>
                                 <option><a>Lebanon</a></option>
                                 <option><a>Lebanon</a></option>
-                            </ul>
                         </select>
                         <div class="divider"></div>
-                        <select id='country select' class="select select-bordered w-full max-w-xs">
+                        <select id='admin-level-select' class="select select-bordered w-full max-w-xs">
                             <summary class="btn m-1">Admin Level</summary>
                                 <option><a>Level 2</a></option>
                                 <option><a>Level 2</a></option>
-                                <option><a>level 2</a></option>
-                            </ul>
+                                <option><a>Level 2</a></option>
                         </select>
                         <div class="divider"></div>
-                        <select id='country select' class="select select-bordered w-full max-w-xs">
+                        <select id='data-type-select' class="select select-bordered w-full max-w-xs">
                             <summary class="btn m-1">Data Type</summary>
-                                <option><a>GeoJSon</a></option>
+                                <option><a>GeoJSON</a></option>
                                 <option><a>CSV</a></option>
-                            </ul>
                         </select>
                         <div class="divider"></div>
                         <button class="btn btn-success">Go!</button>
-
-
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>
+
+    <!-- Tabs should be directly above the dataviz container -->
     <div role="tablist" class="tabs tabs-lifted">
         <a role="tab" class="tab">Tab 1</a>
         <a role="tab" class="tab tab-active">Tab 2</a>
         <a role="tab" class="tab">Tab 3</a>
     </div>
-    <div id="dataviz container">
+
+    <!-- Dataviz container -->
+    <div id="dataviz-container">
+        <!-- Your visualization content goes here -->
     </div>
 
     <script src="scripts/main.js"></script>
