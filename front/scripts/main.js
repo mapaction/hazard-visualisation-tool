@@ -1,46 +1,37 @@
-function go_button_onclick(){
-
-
+function go_button_onclick() {
     var country = document.getElementById("country").value;
     var admin_level = document.getElementById("admin level").value;
     var data_type = document.getElementById("data type").value;
-   
-    
+
     console.log("country: " + country);
     console.log("admin level: " + admin_level);
     console.log("data type: " + data_type);
 
-    //var api_request =  fetch("http://localhost:5000/api/v1/data?country=" + country + "&admin_level=" + admin_level + "&data_type=" + data_type);
-    //var api_response = api_request.then(response => response.json());
+    // Test data for table display
     const csvData = `Name,Age,City
     John Doe,30,New York
     Jane Smith,25,Los Angeles
     Bob Johnson,35,Chicago`;
 
     const table = parseCSVToTable(csvData);
-    document.getElementById('tableContainer').innerHTML = ""
+    document.getElementById('tableContainer').innerHTML = ""; // Clear the previous content
+    document.getElementById('tableContainer').appendChild(table); // Append the new table
 
-    document.getElementById('tableContainer').appendChild(table);
-
+    // Initialize Leaflet map
     var map = L.map('mapContainer').setView([51.505, -0.09], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+    // Use an alternate tile server that supports subdomains for better performance
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ['a', 'b', 'c']  // Load from multiple subdomains for faster performance
     }).addTo(map);
-    
-}
-
-
-function tabular_visualsiation(serialisedcsv){
-    
-
-
 }
 
 function parseCSVToTable(csv) {
     // Split the CSV string into rows
     const rows = csv.split('\n');
-    
+
     // Create a table element
     let table = document.createElement('table');
     table.className = 'table table-zebra'; // Using DaisyUI classes
@@ -66,4 +57,3 @@ function parseCSVToTable(csv) {
 
     return table;
 }
-
