@@ -11,10 +11,10 @@ clone repository
 git clone git@github.com:mapaction/hazard-visualisation-tool.git
 ```
 
-
 install dependencies
 
 ```bash
+cd hazard-visualisation-tool
 poetry install --no-root
 ```
 
