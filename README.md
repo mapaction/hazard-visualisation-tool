@@ -2,6 +2,7 @@
 
 Disaster risk assessment is crucial for effective preparedness and response.
 
+
 ### Setup
 
 clone repository
@@ -9,6 +10,7 @@ clone repository
 ```bash
 git clone git@github.com:mapaction/hazard-visualisation-tool.git
 ```
+
 
 install dependencies
 
