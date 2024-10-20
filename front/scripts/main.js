@@ -103,7 +103,7 @@ function geojsonToTable(geojson) {
     table.className = 'table table-zebra';
 
     let headerRow = table.insertRow();
-    ['Name', 'Latitude', 'Longitude'].forEach(header => {
+    ['Name', 'Name_2', 'Population'].forEach(header => {
         let th = document.createElement('th');
         th.textContent = header;
         headerRow.appendChild(th);
@@ -111,11 +111,11 @@ function geojsonToTable(geojson) {
     geojson.features.forEach(feature => {
         let row = table.insertRow();
         let nameCell = row.insertCell();
-        nameCell.textContent = feature.properties.name;
-        let latCell = row.insertCell();
-        latCell.textContent = feature.geometry.coordinates[1];
-        let lngCell = row.insertCell();
-        lngCell.textContent = feature.geometry.coordinates[0];
+        nameCell.textContent = feature.properties.admin2Name;
+        let name2Cell = row.insertCell();
+        name2Cell.textContent = feature.properties.admin2Na_1;
+        let popCell = row.insertCell();
+        popCell.textContent = feature.properties.population;
     });
 
     return table;
