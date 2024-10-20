@@ -50,7 +50,21 @@ function processData(data, dataType) {
     document.getElementById('tableContainer').appendChild(tableData);
 
     // Update map
-    initMap(data, isGeojson);
+
+    if (isGeojson){
+        console.log('geojson')
+        document.getElementById('maptab').click()
+        document.getElementById('tabletab')
+        initMap(data, isGeojson);
+
+    }
+    else{
+        document.getElementById('tabletab').click()
+        document.getElementById('maptab')
+        initMap(data, isGeojson);
+
+    }
+
 }
 
 
