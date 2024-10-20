@@ -3,64 +3,71 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>My Webpage</title>
+    <title class="font-sans text-2xl">Hazard Visualisation Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
 </head>
 
-<body>
-    <div id="drawer-container">
-        <div class="drawer lg:drawer-open">
-            <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-            <div class="drawer-content flex flex-col items-center justify-center">
-                <label htmlFor="my-drawer-2" class="btn btn-primary drawer-button lg:hidden mt-10">Show Options</label>
-            </div>
-            <div class="drawer-side">
-                <label htmlFor="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-                    <h1>Map Action Datathon Hazard Visualisation Tool Test</h1>
+<body class="h-screen">
+    <div>
+        <div id="drawer container" class="float-left w-2/12 h-screen">
+            <ul class="menu min-h-full bg-base-200 text-base-content">
+                <img src="assets/mapaction_logo.png">
+                <h1 class="font-sans text-2xl pl-4">Map Action Datathon Hazard Visualisation Tool</h1>
+                <div class="'pl-4">
                     <div class="divider"></div>
-                    <li>
-                        <select id='country select' class="select select-bordered w-full max-w-xs">
-                            <summary class="btn m-1">Country</summary>
-                                <option><a>Lebanon</a></option>
-                                <option><a>Lebanon</a></option>
-                                <option><a>Lebanon</a></option>
-                        </select>
-                        <div class="divider"></div>
-                        <select id='admin-level-select' class="select select-bordered w-full max-w-xs">
-                            <summary class="btn m-1">Admin Level</summary>
-                                <option><a>Level 2</a></option>
-                                <option><a>Level 2</a></option>
-                                <option><a>Level 2</a></option>
-                        </select>
-                        <div class="divider"></div>
-                        <select id='data-type-select' class="select select-bordered w-full max-w-xs">
-                            <summary class="btn m-1">Data Type</summary>
-                                <option><a>GeoJSON</a></option>
-                                <option><a>CSV</a></option>
-                        </select>
-                        <div class="divider"></div>
-                        <button class="btn btn-success">Go!</button>
-                    </li>
+                    <select id='country' class="select select-bordered w-full max-w-xs">
+                        <summary class="btn m-1">Country</summary>
+                        <option><a>Lebanon</a></option>
+                        <option><a>Lebanon</a></option>
+                        <option><a>Lebanon</a></option>
+            </ul>
+            </select>
+            <div class="divider"></div>
+            <select id='admin level' class="select select-bordered w-full max-w-xs">
+                <summary class="btn m-1">Admin Level</summary>
+                <option><a>Level 2</a></option>
+                <option><a>Level 2</a></option>
+                <option><a>level 2</a></option>
                 </ul>
-            </div>
+            </select>
+            <div class="divider"></div>
+            <select id='data type' class="select select-bordered w-full max-w-xs">
+                <summary class="btn m-1">Data Type</summary>
+                <option><a>GeoJSon</a></option>
+                <option><a>CSV</a></option>
+                </ul>
+            </select>
+            <div class="divider"></div>
         </div>
+        <button class="btn btn-success" onclick=go_button_onclick()>Go!</button>
+
+        </ul>
+
+    </div>
     </div>
 
-    <!-- Tabs should be directly above the dataviz container -->
-    <div role="tablist" class="tabs tabs-lifted">
-        <a role="tab" class="tab">Tab 1</a>
-        <a role="tab" class="tab tab-active">Tab 2</a>
-        <a role="tab" class="tab">Tab 3</a>
+    <div id="dataviz container" class="float-right w-10/12 pl-2 pt-2">
+        <div role="tablist" class="tabs tabs-bordered">
+            <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Map" />
+                <div role="tabpanel" class="tab-content"
+                style="
+                height: 600px;" id="mapContainer"></div>
+            <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Table" checked="checked" />
+            <div role="tabpanel" class="tab-content" id="tableContainer"></div>
+
+        </div>
+
     </div>
 
-    <!-- Dataviz container -->
-    <div id="dataviz-container">
-        <!-- Your visualization content goes here -->
     </div>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="scripts/main.js"></script>
+
 </body>
 
 </html>
