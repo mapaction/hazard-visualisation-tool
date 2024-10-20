@@ -75,8 +75,8 @@ function initMap(data, isGeojson) {
                 return L.marker(latlng);
             },
             onEachFeature: function(feature, layer) {
-                if (feature.properties && feature.properties.name) {
-                    layer.bindPopup(feature.properties.name);
+                if (feature.properties && feature.properties.admin2Name) {
+                    bindEnhancedPopup(layer, feature);
                 }
             }
         });
@@ -192,6 +192,42 @@ async function fetchCountryData() {
 async function initCountrySelect() {
     const countries = await fetchCountryData();
     populateCountrySelect(countries);
+}
+
+function bindEnhancedPopup(layer, feature) {
+    const popupContent = document.createElement('div');
+    popupContent.className = 'max-h-72 overflow-y-auto p-4';
+
+    // Add a title using the admin2Name property
+    const title = document.createElement('h4');
+    title.className = 'text-lg font-bold mb-2';
+    title.textContent = feature.properties.admin2Name || 'Unknown Area';
+    popupContent.appendChild(title);
+
+    // Create a table for the properties
+    const table = document.createElement('table');
+    table.className = 'w-full border-collapse';
+
+    // Iterate through all properties
+    for (const [key, value] of Object.entries(feature.properties)) {
+        if (value !== null && value !== undefined) {
+            const row = table.insertRow();
+            row.className = 'border-b border-gray-200';
+            
+            const cellName = row.insertCell(0);
+            cellName.className = 'py-2 pr-4 font-semibold w-2/5';
+            cellName.textContent = key;
+            
+            const cellValue = row.insertCell(1);
+            cellValue.className = 'py-2';
+            cellValue.textContent = value;
+        }
+    }
+
+    popupContent.appendChild(table);
+
+    // Bind the popup with the created content
+    layer.bindPopup(popupContent);
 }
 
 
