@@ -1,4 +1,3 @@
-from typing import Any
 import numpy as np
 import pycountry
 from pathlib import Path
@@ -9,7 +8,6 @@ import geopandas as gpd
 from markupsafe import Markup
 
 from flask import Flask, request
-from rasterio.windows import from_bounds
 
 app = Flask(__name__)
 
@@ -47,7 +45,7 @@ def country_list():
 
 
 @app.route("/population/")
-def read_popn():
+def calculate_popn_per_admin_bdry():
     dataset = rasterio.open('../data/lbn_ppp_2020.tif')
     shp_file_path = "../data/lebanon-draft-01.json"
     gdf = gpd.read_file(shp_file_path)
