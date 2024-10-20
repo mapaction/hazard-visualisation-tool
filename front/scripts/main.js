@@ -152,7 +152,7 @@ function parseCSVToTable(csv) {
 
 // Function to populate the select element with country data
 function populateCountrySelect(countries) {
-    const select = document.getElementById('countrySelect');
+    const select = document.getElementById('country');
     
     // Clear existing options
     select.innerHTML = '';
@@ -164,10 +164,35 @@ function populateCountrySelect(countries) {
     select.add(defaultOption);
     
     // Add an option for each country
-    countries.forEach(([countryName, isoCode]) => {
+
+    for (var c of countries){
         const option = document.createElement('option');
-        option.text = countryName;
-        option.value = isoCode;
+        option.text = c.name;
+        option.value = c.iso_3;
         select.add(option);
-    });
+
+    };
 }
+
+async function fetchCountryData() {
+    try {
+        const response = await fetch('http://127.0.0.1:5000/countries/');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log(response.data);
+        const data = await response.json();
+        return data; // Assuming the API returns an array of [countryName, isoCode] tuples
+    } catch (error) {
+        console.error('Error fetching country data:', error);
+        return [];
+    }
+}
+
+async function initCountrySelect() {
+    const countries = await fetchCountryData();
+    populateCountrySelect(countries);
+}
+
+
+document.addEventListener('DOMContentLoaded', initCountrySelect);

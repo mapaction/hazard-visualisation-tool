@@ -37,4 +37,4 @@ def country_list():
          "available_admin_levels": 3}
         for country in pycountry.countries
     ]
-    return Markup(country_data)
+    return country_data
