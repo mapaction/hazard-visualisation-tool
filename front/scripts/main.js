@@ -149,3 +149,25 @@ function parseCSVToTable(csv) {
 
     return table;
 }
+
+// Function to populate the select element with country data
+function populateCountrySelect(countries) {
+    const select = document.getElementById('countrySelect');
+    
+    // Clear existing options
+    select.innerHTML = '';
+    
+    // Add a default option
+    const defaultOption = document.createElement('option');
+    defaultOption.text = 'Select a country';
+    defaultOption.value = '';
+    select.add(defaultOption);
+    
+    // Add an option for each country
+    countries.forEach(([countryName, isoCode]) => {
+        const option = document.createElement('option');
+        option.text = countryName;
+        option.value = isoCode;
+        select.add(option);
+    });
+}
