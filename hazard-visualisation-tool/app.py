@@ -1,5 +1,4 @@
 import pycountry
-from flask import Flask
 from pathlib import Path
 
 from markupsafe import Markup
@@ -32,6 +31,10 @@ def hazard_by_country_and_admin_level(country, hazard, admin_level):
 
 @app.route("/countries/")
 def country_list():
-    country_data = [(country.name, country.alpha_3) for country in
-                    pycountry.countries]
+    country_data = [
+        {"name": country.name,
+         "iso_3": country.alpha_3,
+         "available_admin_levels": 3}
+        for country in pycountry.countries
+    ]
     return Markup(country_data)
