@@ -34,4 +34,4 @@ def hazard_by_country_and_admin_level(country, hazard, admin_level):
 def country_list():
     country_data = [(country.name, country.alpha_3) for country in
                     pycountry.countries]
-    return country_data
+    return Markup(country_data)
