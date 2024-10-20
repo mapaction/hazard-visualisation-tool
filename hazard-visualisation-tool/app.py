@@ -1,3 +1,4 @@
+import pycountry
 from flask import Flask
 from pathlib import Path
 
@@ -27,3 +28,10 @@ def hazard_by_country_and_admin_level(country, hazard, admin_level):
     with open(file_path, encoding="utf8") as f:
         data = f.read()
     return Markup(data)
+
+
+@app.route("/countries/")
+def country_list():
+    country_data = [(country.name, country.alpha_3) for country in
+                    pycountry.countries]
+    return Markup(country_data)
