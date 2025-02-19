@@ -15,6 +15,7 @@ geopandas = "^1.0.1"
 rasterio = "^1.4.1"
 libhxl = "^5.2.1"
 requests = "^2.32.3"
+pycountry = "^24.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
