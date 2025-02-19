@@ -140,6 +140,7 @@ dmypy.json
 
 
 # data
+data
 data/*
 data_in/*
 data_in
