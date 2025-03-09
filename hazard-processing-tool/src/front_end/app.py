@@ -11,6 +11,7 @@ from src.back_end import prepare_hazard_mask, compute_hazard
 
 def configure_page():
     st.set_page_config(page_title="Hazard Processing Tool", layout="wide")
+    st.image("img/MA-logo.png", width=400)
     st.title("Hazard Processing Tool")
     st.markdown("This tool processes hazard data to create a hazard mask and compute hazard metrics.")
 
@@ -69,8 +70,8 @@ def analysis_tab(hazard_choice):
         st.info("Run an analysis to enable CSV download.")
 
 
-def visualization_tab(hazard_choice):
-    st.header("Data Visualization")
+def visualisation_tab(hazard_choice):
+    st.header("Data Visualisation")
     if 'result_df' in st.session_state:
         df = st.session_state['result_df']
         st.subheader("Data Table (Session Data)")
@@ -111,7 +112,7 @@ def main():
     with tab_analysis:
         analysis_tab(hazard_choice)
     with tab_visualisation:
-        visualization_tab(hazard_choice)
+        visualisation_tab(hazard_choice)
 
     if adv_options:
         advanced_options_section()
