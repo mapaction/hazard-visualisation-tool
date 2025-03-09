@@ -90,7 +90,7 @@ def main():
         print(hazard+' hazard prep completed')
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
