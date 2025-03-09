@@ -3,6 +3,8 @@
 import streamlit as st
 from datetime import datetime
 import plotly.express as px
+import os
+import pandas as pd
 
 from src.back_end import prepare_hazard_mask, compute_hazard
 
@@ -16,7 +18,7 @@ def configure_page():
 def sidebar_controls():
     st.sidebar.title("Hazard Tool Controls")
     st.sidebar.write("Configure hazard processing options below:")
-    
+
     hazard_display_names = ["Coastal_Erosion", "Cyclone", "Deforestation", "Earthquake", "Flood", "Landslide"]
     hazard_mapping = {
         "Coastal_Erosion": "coastal_erosion",
@@ -28,14 +30,13 @@ def sidebar_controls():
     }
     hazard_choice_display = st.sidebar.selectbox("Select Hazard Type", hazard_display_names)
     hazard_choice = hazard_mapping[hazard_choice_display]
-    
+
     advanced_options = st.sidebar.checkbox("Show advanced options", value=False)
-    
+
     return hazard_choice, advanced_options
 
 
 def prepare_mask():
-    # Cache the mask preparation result so it only runs once per session.
     if "mask_status" not in st.session_state:
         with st.spinner("Preparing hazard mask..."):
             st.session_state["mask_status"] = prepare_hazard_mask.main()
@@ -61,19 +62,27 @@ def analysis_tab(hazard_choice):
         st.info("Run an analysis to enable CSV download.")
 
 
-def visualization_tab():
+def visualization_tab(hazard_choice):
     st.header("Data Visualization")
     if 'result_df' in st.session_state:
         df = st.session_state['result_df']
-        st.subheader("Data Table")
+        st.subheader("Data Table (Session Data)")
         st.dataframe(df, use_container_width=True)
-        if 'exposure' in df.columns:
-            fig = px.bar(df, x=df.columns[0], y="exposure", title="Exposure by Admin Unit")
-            st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.info("No 'exposure' data available for charting.")
     else:
-        st.info("No analysis data available. Run an analysis from the 'Analysis' tab.")
+        file_path = f"./output_data/{hazard_choice}.csv"
+        if os.path.exists(file_path):
+            df = pd.read_csv(file_path)
+            st.subheader("Data Table (Loaded from output_data)")
+            st.dataframe(df, use_container_width=True)
+        else:
+            st.info("No analysis data available. Run an analysis from the 'Analysis' tab.")
+            return
+
+    if 'exposure' in df.columns:
+        fig = px.bar(df, x=df.columns[0], y="exposure", title="Exposure by Admin Unit")
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No 'exposure' data available for charting.")
 
 
 def advanced_options_section():
@@ -90,11 +99,11 @@ def main():
     hazard_choice, adv_options = sidebar_controls()
     prepare_mask()
 
-    tab_analysis, tab_visualization = st.tabs(["Analysis", "Visualisation"])
+    tab_analysis, tab_visualisation = st.tabs(["Analysis", "Visualisation"])
     with tab_analysis:
         analysis_tab(hazard_choice)
-    with tab_visualization:
-        visualization_tab()
+    with tab_visualisation:
+        visualization_tab(hazard_choice)
 
     if adv_options:
         advanced_options_section()
