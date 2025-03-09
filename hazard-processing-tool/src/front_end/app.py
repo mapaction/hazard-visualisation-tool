@@ -17,5 +17,13 @@ hazard_choice = st.selectbox("Hazard Type", hazard_types)
 if st.button("Run Analysis"):
     st.write(f"Running analysis for: {hazard_choice}")
     result_df = compute_hazard.run_analysis(hazard_choice)
-    st.write("Analysis Result:")
-    st.dataframe(result_df) 
+    st.dataframe(result_df)
+    st.session_state['result_df'] = result_df
+    st.session_state['hazard_choice'] = hazard_choice
+
+if st.button("Export CSV"):
+    if 'result_df' in st.session_state and 'hazard_choice' in st.session_state:
+        compute_hazard.export_dataset(st.session_state['result_df'], st.session_state['hazard_choice'])
+        st.write("CSV exported successfully!")
+    else:
+        st.write("Please run an analysis first!")

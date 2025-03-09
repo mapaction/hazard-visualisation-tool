@@ -181,22 +181,19 @@ def export_dataset(df: pd.core.frame.DataFrame, hazard: str):
 
     return
 
-def run_analysis(hazard_type: str):
+def run_analysis(hazard_type: str) -> pd.core.frame.DataFrame:
     """
     Run hazard analysis for a specific hazard type.
     Loads the population raster and admin boundaries, processes the hazard,
-    exports the result, and returns the computed DataFrame.
+    and returns the computed DataFrame.
     """
-  
     pop_raster = rasterio.open(POPULATION_RASTER_PATH)
     admin_df = gpd.read_file(ADMIN_VECTOR_PATH)
-
 
     adm_complete_list = ['adm0_src', 'adm0_name', 'adm1_src', 'adm1_name', 'adm2_src', 'adm2_name']
     adm_list = [col for col in adm_complete_list if col in admin_df.columns]
     adm_list.append('geometry')
     admin_df = admin_df[adm_list]
-
 
     if hazard_type == 'flood':
         df = process_flood(admin_df, pop_raster)
@@ -209,7 +206,6 @@ def run_analysis(hazard_type: str):
     elif hazard_type == 'cyclone':
         df = process_cyclone(admin_df)
     elif hazard_type == 'coastal_erosion':
-        # Determine which admin column to use
         if 'adm2_src' in admin_df.columns:
             adm_col = 'adm2_src'
         elif 'adm1_src' in admin_df.columns:
@@ -219,9 +215,7 @@ def run_analysis(hazard_type: str):
         df = process_coastal_erosion(admin_df, adm_col)
     else:
         raise ValueError(f"Unknown hazard type: {hazard_type}")
-
-  
-    export_dataset(df, hazard_type)
+    
     return df
 
 def main():
