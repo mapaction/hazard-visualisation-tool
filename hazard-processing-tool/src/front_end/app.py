@@ -10,9 +10,12 @@ st.write('This tool processes hazard data to create a hazard mask.')
 prepare = prepare_hazard_mask.main()
 st.write(prepare)
 
-st.write('This tool computes the exposed population.')
-compute = compute_hazard.main()
-st.write(compute)
+st.write("Select a hazard to compute:")
+hazard_types = ["coastal_erosion", "cyclone", "deforestation", "earthquake", "flood", "landslide"]
+hazard_choice = st.selectbox("Hazard Type", hazard_types)
 
-if st.button('Process Hazard'):
-    st.write('Hazard Processed')
+if st.button("Run Analysis"):
+    st.write(f"Running analysis for: {hazard_choice}")
+    result_df = compute_hazard.run_analysis(hazard_choice)
+    st.write("Analysis Result:")
+    st.dataframe(result_df) 
