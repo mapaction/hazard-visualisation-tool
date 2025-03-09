@@ -25,11 +25,11 @@ clean:
 	@poetry env remove --all
 mask:
 	@echo "Running mask.."
-	@poetry run python -m src.prepare_hazard_mask
+	@poetry run python -m src.back_end.prepare_hazard_mask
 
 compute:
 	@echo "Running compute.."
-	@poetry run python -m src.compute_hazard
+	@poetry run python -m src.back_end.compute_hazard
 
 pipeline:	mask compute
 
