@@ -36,6 +36,13 @@ def sidebar_controls():
     return hazard_choice, advanced_options
 
 
+def reset_analysis_if_hazard_changed(hazard_choice):
+    # If a different hazard was previously run, clear the previous result.
+    if "hazard_choice" in st.session_state and st.session_state["hazard_choice"] != hazard_choice:
+        st.session_state.pop("result_df", None)
+        st.session_state["hazard_choice"] = hazard_choice  # update the stored hazard
+
+
 def prepare_mask():
     if "mask_status" not in st.session_state:
         with st.spinner("Preparing hazard mask..."):
@@ -97,6 +104,7 @@ def advanced_options_section():
 def main():
     configure_page()
     hazard_choice, adv_options = sidebar_controls()
+    reset_analysis_if_hazard_changed(hazard_choice)
     prepare_mask()
 
     tab_analysis, tab_visualisation = st.tabs(["Analysis", "Visualisation"])
