@@ -18,6 +18,10 @@ def configure_page():
 
 def sidebar_controls():
     st.sidebar.title("Hazard Tool Controls")
+    
+    if st.sidebar.button("Prepare Hazard Mask"):
+        prepare_mask()
+
     st.sidebar.write("Configure hazard processing options below:")
 
     hazard_display_names = ["Coastal_Erosion", "Cyclone", "Deforestation", "Earthquake", "Flood", "Landslide"]
@@ -33,7 +37,7 @@ def sidebar_controls():
     hazard_choice = hazard_mapping[hazard_choice_display]
 
     advanced_options = st.sidebar.checkbox("Show advanced options", value=False)
-
+    
     return hazard_choice, advanced_options
 
 
@@ -106,7 +110,6 @@ def main():
     configure_page()
     hazard_choice, adv_options = sidebar_controls()
     reset_analysis_if_hazard_changed(hazard_choice)
-    prepare_mask()
 
     tab_analysis, tab_visualisation = st.tabs(["Analysis", "Visualisation"])
     with tab_analysis:
